@@ -30,7 +30,7 @@ module.exports = {
             } else {
                 const randomInsult = insults[Math.floor(Math.random() * insults.length)];
                 await interaction.followUp({
-                    content: `💀 ${randomInsult}`,
+                    content: `${randomInsult}`,
                 });
             }
         }
