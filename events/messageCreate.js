@@ -120,5 +120,28 @@ module.exports = {
         "🚨 An unexpected error occurred. Please try again later."
       );
     }
+    if (message.content.toLowerCase() === "yanto help") {
+        const helpMessage = `
+      📖 **Yanto Bot Commands:**
+      
+      🃏 \`yanto joke\`  
+      Sends a random *bapak-bapak* joke with "Lucu" and "Garing" buttons.
+      
+      💬 \`yanto rizz\`  
+      Sends a smooth pickup line and a spicy image.
+      
+      📸 \`yanto booru {tag1,tag2}\`  
+      Fetches a safe-for-work image from Danbooru with the given tags.
+      
+      🔞 \`yanto booru nsfw {tag1,tag2}\`  
+      Fetches an NSFW image (only allowed in NSFW channels).
+      
+      ℹ️ \`yanto help\`  
+      Shows this help message.
+        `;
+      
+        await message.reply(helpMessage);
+      }
+      
   },
 };
