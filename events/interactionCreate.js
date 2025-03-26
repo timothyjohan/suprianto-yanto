@@ -50,15 +50,6 @@ module.exports = {
             console.warn("Could not delete old message:", err.message);
           }
 
-          // Step 2: Re-send the original crack query
-          await interaction.channel.send(
-            `yanto crack ${interaction.customId
-              .replace("crack_detail_", "")
-              .replaceAll("-", " ")}`
-          );
-
-          // Step 3: Send the selected game info
-          await interaction.channel.send({ embeds: [embed] });
         } catch (err) {
           console.error("Failed to fetch crack detail:", err);
 
@@ -78,7 +69,8 @@ module.exports = {
       }
 
       // === JOKE BUTTONS ===
-      const username = interaction.user.username;
+      if (interaction.customId === "lucu" || interaction.customId === "garing") {
+        const username = interaction.user.username;
       const rating = interaction.customId === "lucu" ? "Lucu" : "Garing";
       const originalMessage = interaction.message;
       const newContent = `${originalMessage.content}\n\n👤 ${username} said: **${rating}**`;
@@ -104,6 +96,8 @@ module.exports = {
           content: response,
         });
       }
+      }
+      
     } catch (error) {
       console.error("Error handling interactionCreate event:", error);
       if (!interaction.replied && !interaction.deferred) {
