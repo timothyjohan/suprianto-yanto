@@ -102,11 +102,11 @@ module.exports = {
           }
 
           await loadingMessage.edit({
-            content: `🎴 **Tags:** \`${tagsArray.join(
-              ", "
-            )}\`\n🔗 [View on Danbooru](https://danbooru.donmai.us/posts/${
-              randomPost.id
-            })`,
+            content: `🎴 **Tags:** \`${tagsArray.join(", ")}\`
+          🏷️ **Top Tags:** \`${
+            randomPost.tag_string?.split(" ").slice(0, 5).join(", ") || "N/A"
+          }\`
+          🔗 <https://danbooru.donmai.us/posts/${randomPost.id}>`,
             files: [imageUrl],
           });
         } catch (error) {
@@ -121,7 +121,7 @@ module.exports = {
       );
     }
     if (message.content.toLowerCase() === "yanto help") {
-        const helpMessage = `
+      const helpMessage = `
       📖 **Yanto Bot Commands:**
       
       🃏 \`yanto joke\`  
@@ -139,9 +139,8 @@ module.exports = {
       ℹ️ \`yanto help\`  
       Shows this help message.
         `;
-      
-        await message.reply(helpMessage);
-      }
-      
+
+      await message.reply(helpMessage);
+    }
   },
 };
