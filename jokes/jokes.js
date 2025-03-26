@@ -3,4 +3,18 @@ module.exports = [
     "Kenapa tukang bubur suka senang? karena sering halusi nasi",
     "Ikan apa yang kalo berenang selalu nabtrak? Tuna netra",
     "Mouse logitech apa yang dilarang di indonesia? Mouse logitech G30S PKI.",
+    "burung apa yg suka nolak, burung gakgak",
+    "kenapa banyak cewe tergoda sama buaya? soalnya percaya kalo lidah buaya banyak manfaaatnya",
+    "binatang apa yang deket sama temennya? kepiting soalnya a crab",
+    "kmrn aku demam, trus tak kompress malah jadi rar",
+    "nama kota di jawa tengah yang isinya bapak2 smua namanya purwodaddy",
+    "kenapa tayo warnanya biru? kalo kuning jadi tayi",
+    "apa bahasa inggrisnya adat? adat is tiadat",
+    "kenapa air mata itu bening? soalnya karo ijo jadi air matcha",
+    "air apa yang sehat? airobik",
+    "kenapa kalo naik motor sukanya ketawa? soalnyaz duduk diatas jokes",
+    "pasien kalo kenpa gejala rindu dilarikan kemana? ke ruang i see you",
+    "apa bener kalo petani lagi membajak sawah, sawahnya bakal posting status 'sorry di bajak'?",
+    "tau ngga bola basket gaboleh basah? soalnya harus di lempar ke ring",
+    "makanan apa yang gaboleh di makan? donat eat"
 ];
