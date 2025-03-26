@@ -73,21 +73,41 @@ module.exports = {
         }
 
         const rawTags = match[1];
-        const tagsArray = rawTags.split(",").map((tag) => tag.trim());
+        const userInputTags = rawTags.split(",").map((tag) => tag.trim());
 
-        if (tagsArray.length > 2) {
+        if (userInputTags.length > 2) {
           return message.reply("⚠️ Maximum of 2 tags allowed.");
         }
 
-        const ratingTag = isNSFWRequested ? "rating:explicit" : "rating:safe";
-        const tagQuery = `${tagsArray.join("+")}+${ratingTag}`;
-        const apiUrl = `https://danbooru.donmai.us/posts.json?tags=${tagQuery}&limit=10`;
+        const resolveTag = async (tag) => {
+          try {
+            const res = await axios.get(
+              "https://danbooru.donmai.us/tags.json",
+              {
+                params: {
+                  "search[name_matches]": `${tag}*`,
+                  limit: 1,
+                },
+              }
+            );
+
+            return res.data[0]?.name || tag;
+          } catch (err) {
+            console.warn(`⚠️ Could not resolve tag "${tag}", using fallback.`);
+            return tag;
+          }
+        };
 
         const loadingMessage = await message.channel.send(
-          "🔍 Fetching image from Danbooru..."
+          "🔍 Resolving tags and fetching image from Danbooru..."
         );
 
         try {
+          const resolvedTags = await Promise.all(userInputTags.map(resolveTag));
+          const ratingTag = isNSFWRequested ? "rating:explicit" : "rating:safe";
+          const tagQuery = `${resolvedTags.join("+")}+${ratingTag}`;
+          const apiUrl = `https://danbooru.donmai.us/posts.json?tags=${tagQuery}&limit=10`;
+
           const response = await axios.get(apiUrl);
           const posts = response.data;
 
@@ -103,15 +123,17 @@ module.exports = {
           }
 
           await loadingMessage.edit({
-            content: `🎴 **Tags:** \`${tagsArray.join(", ")}\`
-🏷️ **Top Tags:** \`${
+            content: `🎴 **User Search:** \`${userInputTags.join(
+              ", "
+            )}\`\n🔍 **Resolved Tags:** \`${resolvedTags.join(
+              ", "
+            )}\`\n🏷️ **Top Tags:** \`${
               randomPost.tag_string?.split(" ").slice(0, 5).join(", ") || "N/A"
-            }\`
-🔗 <https://danbooru.donmai.us/posts/${randomPost.id}>`,
+            }\`\n🔗 <https://danbooru.donmai.us/posts/${randomPost.id}>`,
             files: [imageUrl],
           });
         } catch (error) {
-          console.error(error);
+          console.error("Error fetching Danbooru image:", error);
           return loadingMessage.edit("🚨 Error fetching image from Danbooru.");
         }
       }
